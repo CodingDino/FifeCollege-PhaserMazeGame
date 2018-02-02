@@ -192,6 +192,8 @@ var mainState = {
             var messageLabel = game.add.text(100, 250, 'YOU ESCAPED!',{ font: '40px Arial', fill: '#ff0000' });
             messageLabel.fixedToCamera=true;
             player.kill();
+            baddies.forEach(function(baddy) {
+                baddy.kill();
             });
             gameOver=true;
         }
