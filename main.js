@@ -147,29 +147,20 @@ var mainState = {
     
     moveBaddy: function(){
         
-        if (player.x>baddy1.x){
-            baddy1.body.velocity.x=80;
-        }else if (player.x<baddy1.x){
-            baddy1.body.velocity.x=-80;
-        }
-        
-        if (player.y>baddy1.y){
-            baddy1.body.velocity.y=80;
-        }else if (player.y<baddy1.y){
-            baddy1.body.velocity.y=-80;
-        }
-        
-        if (player.x>baddy2.x){
-            baddy2.body.velocity.x=100;
-        }else if (player.x<baddy2.x){
-            baddy2.body.velocity.x=-100;
-        }
-        
-        if (player.y>baddy2.y){
-            baddy2.body.velocity.y=100;
-        }else if (player.y<baddy2.y){
-            baddy2.body.velocity.y=-100;
-        }
+        baddies.forEach(function(baddy) 
+        {
+            if (player.x>baddy.x){
+                baddy.body.velocity.x=80;
+            }else if (player.x<baddy.x){
+                baddy.body.velocity.x=-80;
+            }
+
+            if (player.y>baddy.y){
+                baddy.body.velocity.y=80;
+            }else if (player.y<baddy.y){
+                baddy.body.velocity.y=-80;
+            }
+        });
 
     },
     
