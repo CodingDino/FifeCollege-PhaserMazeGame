@@ -192,8 +192,7 @@ var mainState = {
             var messageLabel = game.add.text(100, 250, 'YOU ESCAPED!',{ font: '40px Arial', fill: '#ff0000' });
             messageLabel.fixedToCamera=true;
             player.kill();
-           baddy1.kill();
-            baddy2.kill();
+            });
             gameOver=true;
         }
     },
