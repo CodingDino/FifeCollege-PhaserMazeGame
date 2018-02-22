@@ -14,7 +14,11 @@ var mainState = {
     },
     
     create: function() {
-       
+        // set BG colour
+        game.stage.backgroundColor = '#5474cb';
+        
+        // start the physics engine
+        game.physics.startSystem(Phaser.Physics.ARCADE); 
     },
     
     update: function() {
