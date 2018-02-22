@@ -16,6 +16,12 @@ var mainState = {
     
     // The create function is run once at the beginning of the state, after preloading is complete.
     create: function() {
+        
+        // Reset our variables from last play through
+        timeLeft = 30;
+        gameOver = false;
+        gotKey = false;
+        
         // set BG colour
         game.stage.backgroundColor = '#5474cb';
         
@@ -56,10 +62,6 @@ var mainState = {
         
         // initialise keyboard cursors
         cursors = game.input.keyboard.createCursorKeys();
-        
-        // Reset our gameOver and gotKey variables
-        gameOver = false;
-        gotKey = false;
     },
     
     // The update function is run every frame that the state is active
@@ -67,11 +69,11 @@ var mainState = {
         
         // set up collisions
         game.physics.arcade.collide(player,maze);
-        game.physics.arcade.overlap(player,baddies);
+        game.physics.arcade.overlap(player,baddies, this.loseGame, null, this);
         game.physics.arcade.collide(maze,baddies);
         game.physics.arcade.collide(baddies,baddies);
-        game.physics.arcade.overlap(player,key,this.pickupKey,null,this);
-        game.physics.arcade.overlap(player,door,this.winGame,null,this);
+        game.physics.arcade.overlap(player,key, this.pickupKey, null, this);
+        game.physics.arcade.overlap(player,door, this.winGame, null, this);
         
         this.movePlayer();
     },
@@ -183,14 +185,19 @@ var mainState = {
         }
         
     },
+    
+    // If the player touches a baddy, lose the game!
+    loseGame: function() {
+        // This causes the state (level) to reload from the beginning!
+        game.state.start('main');
+    },
 };
 
 // the variables we will be using for our game.
 var maze, player, baddies, baddy1, 
     baddy2, key, door, keyPickup, 
-    winGame, timeLabel, cursors, gameOver, 
-    gotKey;
-var timeLeft = 30;
+    winGame, timeLeft, timeLabel, 
+    cursors, gameOver, gotKey;
 
 var game = new Phaser.Game(500, 500, Phaser.AUTO, 'gameDiv');
 game.state.add('main', mainState);
