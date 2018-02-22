@@ -74,6 +74,9 @@ var mainState = {
     
 };
 
+// the variables we will be using for our game.
+var maze;
+
 var game = new Phaser.Game(500, 500, Phaser.AUTO, 'gameDiv');
 game.state.add('main', mainState);
 game.state.start('main');
