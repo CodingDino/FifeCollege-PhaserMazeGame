@@ -70,7 +70,7 @@ var mainState = {
         game.physics.arcade.overlap(player,baddies);
         game.physics.arcade.collide(maze,baddies);
         game.physics.arcade.collide(baddies,baddies);
-        game.physics.arcade.overlap(player,key);
+        game.physics.arcade.overlap(player,key,this.pickupKey,null,this);
         game.physics.arcade.overlap(player,door);
         
         this.movePlayer();
@@ -152,6 +152,12 @@ var mainState = {
         }
     },
     
+    // Handle the key being picked up
+    pickupKey: function() {
+        keyPickup.play();
+        key.kill();
+        gotKey = true;
+    },
 };
 
 // the variables we will be using for our game.
