@@ -24,6 +24,10 @@ var mainState = {
         
         // make maze
         this.buildMaze();
+        
+        // create player & add physics to them
+        player = game.add.sprite(60,405,'player');
+        game.physics.arcade.enable(player);
     },
     
     // The update function is run every frame that the state is active
@@ -78,7 +82,7 @@ var mainState = {
 };
 
 // the variables we will be using for our game.
-var maze;
+var maze, player;
 
 var game = new Phaser.Game(500, 500, Phaser.AUTO, 'gameDiv');
 game.state.add('main', mainState);
