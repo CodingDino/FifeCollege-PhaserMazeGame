@@ -73,6 +73,7 @@ var mainState = {
         game.physics.arcade.overlap(player,key);
         game.physics.arcade.overlap(player,door);
         
+        this.movePlayer();
     },
     
     // Maze building function - creates maze based on an array.
@@ -118,6 +119,38 @@ var mainState = {
         maze.setAll('body.immovable', true);
     },
     
+    // Handle player movement
+    movePlayer: function() {
+        // Left/Right Movement
+        if (cursors.left.isDown) {
+             if (player.x > 0) {
+                 player.body.velocity.x = -200;
+             }       
+        }
+        else if (cursors.right.isDown) {
+            if (player.x < 460) {
+                player.body.velocity.x = 200;
+            }
+        }
+        else {
+            player.body.velocity.x = 0;
+        }
+        
+        // Up/Down Movement
+        if (cursors.up.isDown) {
+             if (player.y > 0) {
+                 player.body.velocity.y = -200;
+             }           
+        }
+        else if (cursors.down.isDown) {
+            if (player.y < 460) {
+                player.body.velocity.y = 200;
+            }
+        } 
+        else {
+            player.body.velocity.y = 0;
+        }
+    },
     
 };
 
