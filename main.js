@@ -64,7 +64,15 @@ var mainState = {
     
     // The update function is run every frame that the state is active
     update: function() {
-
+        
+        // set up collisions
+        game.physics.arcade.collide(player,maze);
+        game.physics.arcade.overlap(player,baddies);
+        game.physics.arcade.collide(maze,baddies);
+        game.physics.arcade.collide(baddies,baddies);
+        game.physics.arcade.overlap(player,key);
+        game.physics.arcade.overlap(player,door);
+        
     },
     
     // Maze building function - creates maze based on an array.
