@@ -1,5 +1,6 @@
 var mainState = {
 
+    // The preload function is run once at the beginning of the state, before anything else.
     preload: function() {
         // load graphics
         game.load.image('player', 'assets/player.png');
@@ -13,6 +14,7 @@ var mainState = {
         game.load.audio('win', 'assets/win.wav');
     },
     
+    // The create function is run once at the beginning of the state, after preloading is complete.
     create: function() {
         // set BG colour
         game.stage.backgroundColor = '#5474cb';
@@ -24,6 +26,7 @@ var mainState = {
         this.buildMaze();
     },
     
+    // The update function is run every frame that the state is active
     update: function() {
 
     },
