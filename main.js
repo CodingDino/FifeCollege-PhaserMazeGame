@@ -34,9 +34,16 @@ var mainState = {
         baddies.enableBody = true; // add physics to the baddies
         baddy1 = game.add.sprite(60,60,'baddy');
         baddy2 = game.add.sprite(310,410,'baddy');
-        
         baddies.add(baddy1);
         baddies.add(baddy2);
+        
+        // create key
+        key = game.add.sprite(150,50,'key');
+        game.physics.arcade.enable(key);
+        
+        // create door
+        door = game.add.sprite(400,100,'door');
+        game.physics.arcade.enable(door);
     },
     
     // The update function is run every frame that the state is active
@@ -91,7 +98,7 @@ var mainState = {
 };
 
 // the variables we will be using for our game.
-var maze, player, baddies, baddy1, baddy2;
+var maze, player, baddies, baddy1, baddy2, key, door;
 
 var game = new Phaser.Game(500, 500, Phaser.AUTO, 'gameDiv');
 game.state.add('main', mainState);
