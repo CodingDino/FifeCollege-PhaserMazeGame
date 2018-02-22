@@ -53,6 +53,13 @@ var mainState = {
         timeLabel = game.add.text(300, 10, 
                                   "TIME: " + timeLeft,
                                   { font: '12px Arial', fill: '#ffffff', align: 'left' } );
+        
+        // initialise keyboard cursors
+        cursors = game.input.keyboard.createCursorKeys();
+        
+        // Reset our gameOver and gotKey variables
+        gameOver = false;
+        gotKey = false;
     },
     
     // The update function is run every frame that the state is active
@@ -107,7 +114,10 @@ var mainState = {
 };
 
 // the variables we will be using for our game.
-var maze, player, baddies, baddy1, baddy2, key, door, keyPickup, winGame, timeLabel;
+var maze, player, baddies, baddy1, 
+    baddy2, key, door, keyPickup, 
+    winGame, timeLabel, cursors, gameOver, 
+    gotKey;
 var timeLeft = 30;
 
 var game = new Phaser.Game(500, 500, Phaser.AUTO, 'gameDiv');
