@@ -71,7 +71,7 @@ var mainState = {
         game.physics.arcade.collide(maze,baddies);
         game.physics.arcade.collide(baddies,baddies);
         game.physics.arcade.overlap(player,key,this.pickupKey,null,this);
-        game.physics.arcade.overlap(player,door);
+        game.physics.arcade.overlap(player,door,this.winGame,null,this);
         
         this.movePlayer();
     },
@@ -157,6 +157,31 @@ var mainState = {
         keyPickup.play();
         key.kill();
         gotKey = true;
+    },
+    
+    // If the player touches the door with the key, win the game!
+    winGame: function() {
+        
+        // Only do winning logic if the player has the key!
+        if (gotKey == true) {
+            // Play winning sound
+            winGame.play();
+            
+            // display message
+            var messageLabel = game.add.text(100, 250, 
+                                             'YOU ESCAPED!',
+                                             { font: '40px Arial', fill: '#ff0000' });
+            messageLabel.fixedToCamera = true;
+            
+            // Kill player and baddy sprites
+            player.kill();
+            baddy1.kill();
+            baddy2.kill();
+            
+            // Set gameOver variable
+            gameOver = true;
+        }
+        
     },
 };
 
