@@ -44,6 +44,10 @@ var mainState = {
         // create door
         door = game.add.sprite(400,100,'door');
         game.physics.arcade.enable(door);
+        
+        // create sound references for use later
+        keyPickup = game.add.audio('pickup');
+        winGame = game.add.audio('win');
     },
     
     // The update function is run every frame that the state is active
@@ -98,7 +102,7 @@ var mainState = {
 };
 
 // the variables we will be using for our game.
-var maze, player, baddies, baddy1, baddy2, key, door;
+var maze, player, baddies, baddy1, baddy2, key, door, keyPickup, winGame;
 
 var game = new Phaser.Game(500, 500, Phaser.AUTO, 'gameDiv');
 game.state.add('main', mainState);
