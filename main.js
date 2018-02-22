@@ -77,6 +77,7 @@ var mainState = {
         
         this.movePlayer();
         this.moveBaddy();
+        this.countDown();
     },
     
     // Maze building function - creates maze based on an array.
@@ -221,13 +222,35 @@ var mainState = {
         }
 
     },
+    
+    // Function to update the timer text, and indicate time up.
+    countDown: function() {
+        if(gameOver == false) {
+            frameCount++;
+            if (frameCount%60 == 0) {
+                if(timeLeft > 0) {
+                    timeLeft--;
+                    timeLabel.text="TIME: "+ timeLeft;
+                    if (timeLeft < 1) {
+                        var messageLabel = game.add.text(100, 250, 
+                                                         'TIME UP!',
+                                                         { font: '40px Arial', fill: '#ffffff' });
+                        player.kill();
+                    }
+                }
+
+            }
+        }
+        
+
+    },
 };
 
 // the variables we will be using for our game.
 var maze, player, baddies, baddy1, 
     baddy2, key, door, keyPickup, 
     winGame, timeLeft, timeLabel, 
-    cursors, gameOver, gotKey;
+    cursors, gameOver, gotKey, frameCount = 0;
 
 var game = new Phaser.Game(500, 500, Phaser.AUTO, 'gameDiv');
 game.state.add('main', mainState);
