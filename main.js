@@ -76,6 +76,7 @@ var mainState = {
         game.physics.arcade.overlap(player,door, this.winGame, null, this);
         
         this.movePlayer();
+        this.moveBaddy();
     },
     
     // Maze building function - creates maze based on an array.
@@ -190,6 +191,35 @@ var mainState = {
     loseGame: function() {
         // This causes the state (level) to reload from the beginning!
         game.state.start('main');
+    },
+    
+    // Function to move the baddies and make them chase the player
+    moveBaddy: function() {
+        
+        if (player.x>baddy1.x){
+            baddy1.body.velocity.x=80;
+        }else if (player.x<baddy1.x){
+            baddy1.body.velocity.x=-80;
+        }
+        
+        if (player.y>baddy1.y){
+            baddy1.body.velocity.y=80;
+        }else if (player.y<baddy1.y){
+            baddy1.body.velocity.y=-80;
+        }
+        
+        if (player.x>baddy2.x){
+            baddy2.body.velocity.x=100;
+        }else if (player.x<baddy2.x){
+            baddy2.body.velocity.x=-100;
+        }
+        
+        if (player.y>baddy2.y){
+            baddy2.body.velocity.y=100;
+        }else if (player.y<baddy2.y){
+            baddy2.body.velocity.y=-100;
+        }
+
     },
 };
 
