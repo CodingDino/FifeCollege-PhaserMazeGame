@@ -48,6 +48,11 @@ var mainState = {
         // create sound references for use later
         keyPickup = game.add.audio('pickup');
         winGame = game.add.audio('win');
+        
+        // text label showing time left in the game.
+        timeLabel = game.add.text(300, 10, 
+                                  "TIME: " + timeLeft,
+                                  { font: '12px Arial', fill: '#ffffff', align: 'left' } );
     },
     
     // The update function is run every frame that the state is active
@@ -102,7 +107,8 @@ var mainState = {
 };
 
 // the variables we will be using for our game.
-var maze, player, baddies, baddy1, baddy2, key, door, keyPickup, winGame;
+var maze, player, baddies, baddy1, baddy2, key, door, keyPickup, winGame, timeLabel;
+var timeLeft = 30;
 
 var game = new Phaser.Game(500, 500, Phaser.AUTO, 'gameDiv');
 game.state.add('main', mainState);
