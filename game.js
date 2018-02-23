@@ -14,4 +14,4 @@ game.state.add('menu', menuState);
 game.state.add('play', playState);
 
 // Start the "boot" state
-game.state.start('play');
+game.state.start('boot');

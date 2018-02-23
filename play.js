@@ -27,12 +27,6 @@ var playState = {
         gameOver = false;
         gotKey = false;
         
-        // set BG colour
-        game.stage.backgroundColor = '#5474cb';
-        
-        // start the physics engine
-        game.physics.startSystem(Phaser.Physics.ARCADE); 
-        
         // make maze
         this.buildMaze();
         
