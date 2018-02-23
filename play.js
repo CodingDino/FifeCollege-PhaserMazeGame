@@ -7,16 +7,6 @@ var playState = {
 
     // state.preload is called when the state is entered
     preload: function() {
-        // load graphics
-        game.load.image('player', 'assets/player.png');
-        game.load.image('block', 'assets/block.png');
-        game.load.image('baddy', 'assets/baddy.png');
-        game.load.image('key', 'assets/key.png');
-        game.load.image('door', 'assets/door.png');
-        
-        // load audio
-        game.load.audio('pickup', 'assets/pickup.wav');
-        game.load.audio('win', 'assets/win.wav');
     },
     
     // state.create is called after preload finishes
