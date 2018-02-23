@@ -1,3 +1,9 @@
+// Note the globals that will be used:
+/* global   Phaser,
+            bootState, 
+            loadState, 
+            menuState, 
+            playState */
 
 var game = new Phaser.Game(500, 500, Phaser.AUTO, 'gameDiv');
 

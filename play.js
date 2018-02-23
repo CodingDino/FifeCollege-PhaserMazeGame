@@ -1,6 +1,6 @@
 var playState = {
 
-    // The preload function is run once at the beginning of the state, before anything else.
+    // state.preload is called when the state is entered
     preload: function() {
         // load graphics
         game.load.image('player', 'assets/player.png');
@@ -14,7 +14,7 @@ var playState = {
         game.load.audio('win', 'assets/win.wav');
     },
     
-    // The create function is run once at the beginning of the state, after preloading is complete.
+    // state.create is called after preload finishes
     create: function() {
         
         // Reset our variables from last play through
@@ -64,7 +64,7 @@ var playState = {
         cursors = game.input.keyboard.createCursorKeys();
     },
     
-    // The update function is run every frame that the state is active
+    // state.update is called every frame
     update: function() {
         
         // set up collisions
