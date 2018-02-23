@@ -19,7 +19,7 @@ var playState = {
         
         // make maze
         // An array of 0 and 1 -> 1 represents a block, 0 a space.
-        var levels = [[
+        levels = [[
             [1,1,1,1,1,1,1,1,1,1],
             [1,0,0,0,0,0,0,0,0,1],
             [1,0,0,0,0,0,0,0,0,1],
@@ -43,7 +43,7 @@ var playState = {
             [1,0,0,0,0,0,0,0,0,1],
             [1,1,1,1,1,1,1,1,1,1]
         ]];
-        this.buildMaze(levels[0]);
+        this.buildMaze(levels[currentLevel]);
         
         // create player & add physics to them
         player = game.add.sprite(60,405,'player');
@@ -168,21 +168,30 @@ var playState = {
             // Play winning sound
             winGame.play();
             
-            // display message
-            var messageLabel = game.add.text(100, 250, 
-                                             'YOU ESCAPED!',
-                                             { font: '40px Arial', fill: '#ff0000' });
-            messageLabel.fixedToCamera = true;
+            ++currentLevel;
             
-            // Kill player and baddy sprites
-            player.kill();
-            
-            baddies.forEach(function(baddy) {
-                baddy.kill();
-            });
-            
-            // Set gameOver variable
-            gameOver = true;
+            // If we have finished the last level...
+            if (currentLevel == levels.length) {
+                // display message
+                var messageLabel = game.add.text(100, 250, 
+                                                 'YOU ESCAPED!',
+                                                 { font: '40px Arial', fill: '#ff0000' });
+                messageLabel.fixedToCamera = true;
+
+                // Kill player and baddy sprites
+                player.kill();
+
+                baddies.forEach(function(baddy) {
+                    baddy.kill();
+                });
+
+                // Set gameOver variable
+                gameOver = true; 
+            }
+            else {
+                // reload our play state - the new level will be loaded!
+                game.state.start('play');
+            }
         }
         
     },
@@ -240,4 +249,5 @@ var playState = {
 // the variables we will be using for our game.
 var maze, player, baddies, key, door, keyPickup, 
     winGame, timeLeft, timeLabel, 
-    cursors, gameOver, gotKey, frameCount = 0;
+    cursors, gameOver, gotKey, frameCount = 0,
+    levels, currentLevel = 0;
