@@ -21,9 +21,4 @@ var bootState = {
         // Start the load state
         game.state.start('play');
     },
-    
-    // state.update is called every frame
-    update: function() {
-        
-    }
 };
