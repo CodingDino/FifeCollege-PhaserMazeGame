@@ -19,7 +19,19 @@ var playState = {
         
         // make maze
         // An array of 0 and 1 -> 1 represents a block, 0 a space.
-        var blockArray = [
+        var level1 = [
+            [1,1,1,1,1,1,1,1,1,1],
+            [1,0,0,0,0,0,0,0,0,1],
+            [1,0,0,0,0,0,0,0,0,1],
+            [1,0,0,0,0,0,0,0,0,1],
+            [1,0,0,0,0,0,0,0,0,1],
+            [1,0,0,0,0,0,0,0,0,1],
+            [1,0,0,0,0,0,0,0,0,1],
+            [1,0,0,0,0,0,0,0,0,1],
+            [1,0,0,0,0,0,0,0,0,1],
+            [1,1,1,1,1,1,1,1,1,1]
+            ];
+        var level2 = [
             [1,1,1,1,1,1,1,1,1,1],
             [1,0,0,0,1,1,0,0,0,1],
             [1,0,1,0,1,0,0,1,0,1],
@@ -31,7 +43,7 @@ var playState = {
             [1,0,0,0,0,0,0,0,0,1],
             [1,1,1,1,1,1,1,1,1,1]
             ];
-        this.buildMaze(blockArray);
+        this.buildMaze(level1);
         
         // create player & add physics to them
         player = game.add.sprite(60,405,'player');
