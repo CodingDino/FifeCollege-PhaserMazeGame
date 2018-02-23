@@ -27,8 +27,8 @@ var playState = {
         // create baddies
         baddies = game.add.group();
         baddies.enableBody = true; // add physics to the baddies
-        baddy1 = game.add.sprite(60,60,'baddy');
-        baddy2 = game.add.sprite(310,410,'baddy');
+        var baddy1 = game.add.sprite(60,60,'baddy');
+        var baddy2 = game.add.sprite(310,410,'baddy');
         baddies.add(baddy1);
         baddies.add(baddy2);
         
@@ -168,8 +168,10 @@ var playState = {
             
             // Kill player and baddy sprites
             player.kill();
-            baddy1.kill();
-            baddy2.kill();
+            
+            baddies.forEach(function(baddy) {
+                baddy.kill();
+            });
             
             // Set gameOver variable
             gameOver = true;
@@ -185,30 +187,22 @@ var playState = {
     
     // Function to move the baddies and make them chase the player
     moveBaddy: function() {
-        
-        if (player.x>baddy1.x){
-            baddy1.body.velocity.x=80;
-        }else if (player.x<baddy1.x){
-            baddy1.body.velocity.x=-80;
-        }
-        
-        if (player.y>baddy1.y){
-            baddy1.body.velocity.y=80;
-        }else if (player.y<baddy1.y){
-            baddy1.body.velocity.y=-80;
-        }
-        
-        if (player.x>baddy2.x){
-            baddy2.body.velocity.x=100;
-        }else if (player.x<baddy2.x){
-            baddy2.body.velocity.x=-100;
-        }
-        
-        if (player.y>baddy2.y){
-            baddy2.body.velocity.y=100;
-        }else if (player.y<baddy2.y){
-            baddy2.body.velocity.y=-100;
-        }
+            
+        baddies.forEach(function(baddy) {
+            if (player.x > baddy.x) {
+                baddy.body.velocity.x = 80;
+            }
+            else if (player.x < baddy.x) {
+                baddy.body.velocity.x = -80;
+            }
+
+            if (player.y > baddy.y) {
+                baddy.body.velocity.y = 80;
+            }
+            else if (player.y < baddy.y) {
+                baddy.body.velocity.y = -80;
+            }
+        });
 
     },
     
@@ -236,7 +230,6 @@ var playState = {
 };
 
 // the variables we will be using for our game.
-var maze, player, baddies, baddy1, 
-    baddy2, key, door, keyPickup, 
+var maze, player, baddies, key, door, keyPickup, 
     winGame, timeLeft, timeLabel, 
     cursors, gameOver, gotKey, frameCount = 0;
