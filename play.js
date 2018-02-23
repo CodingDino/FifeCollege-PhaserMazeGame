@@ -1,3 +1,8 @@
+// Note the globals that will be used:
+/* global   game,
+            Phaser,
+            console */
+
 var playState = {
 
     // state.preload is called when the state is entered
@@ -232,9 +237,9 @@ var playState = {
                     timeLeft--;
                     timeLabel.text="TIME: "+ timeLeft;
                     if (timeLeft < 1) {
-                        var messageLabel = game.add.text(100, 250, 
-                                                         'TIME UP!',
-                                                         { font: '40px Arial', fill: '#ffffff' });
+                        game.add.text(100, 250, 
+                                      'TIME UP!',
+                                      { font: '40px Arial', fill: '#ffffff' });
                         player.kill();
                     }
                 }
