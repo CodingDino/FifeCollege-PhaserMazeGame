@@ -1,4 +1,4 @@
-var mainState = {
+var playState = {
 
     // The preload function is run once at the beginning of the state, before anything else.
     preload: function() {
@@ -191,7 +191,7 @@ var mainState = {
     // If the player touches a baddy, lose the game!
     loseGame: function() {
         // This causes the state (level) to reload from the beginning!
-        game.state.start('main');
+        game.state.start('play');
     },
     
     // Function to move the baddies and make them chase the player
@@ -251,7 +251,3 @@ var maze, player, baddies, baddy1,
     baddy2, key, door, keyPickup, 
     winGame, timeLeft, timeLabel, 
     cursors, gameOver, gotKey, frameCount = 0;
-
-var game = new Phaser.Game(500, 500, Phaser.AUTO, 'gameDiv');
-game.state.add('main', mainState);
-game.state.start('main');
