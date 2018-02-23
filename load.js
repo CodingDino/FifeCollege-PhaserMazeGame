@@ -34,6 +34,6 @@ var loadState = {
     // state.create is called after preload finishes
     create: function() {
         // Go to the menu state
-        game.state.start('play');
+        game.state.start('menu');
     },
 };
