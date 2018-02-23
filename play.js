@@ -18,7 +18,20 @@ var playState = {
         gotKey = false;
         
         // make maze
-        this.buildMaze();
+        // An array of 0 and 1 -> 1 represents a block, 0 a space.
+        var blockArray = [
+            [1,1,1,1,1,1,1,1,1,1],
+            [1,0,0,0,1,1,0,0,0,1],
+            [1,0,1,0,1,0,0,1,0,1],
+            [1,0,1,0,1,0,1,1,1,1],
+            [1,0,0,0,0,0,0,0,0,1],
+            [1,1,1,1,0,1,1,1,0,1],
+            [1,0,0,0,0,0,0,0,0,1],
+            [1,0,1,1,1,0,1,1,0,1],
+            [1,0,0,0,0,0,0,0,0,1],
+            [1,1,1,1,1,1,1,1,1,1]
+            ];
+        this.buildMaze(blockArray);
         
         // create player & add physics to them
         player = game.add.sprite(60,405,'player');
@@ -72,33 +85,16 @@ var playState = {
     // Maze building function - creates maze based on an array.
     // Later we can improve this to pass in the array and include enemy positions and more!
     // We could even set this up to use a tilemap we can edit externally.
-    buildMaze: function() {
+    buildMaze: function(blockArray) {
         
         // make maze a group of objects
         maze = game.add.group();
         maze.enableBody = true; // add physics to the maze
         
-        // An array of 0 and 1 -> 1 represents a block, 0 a space.
-        var blockArray = [
-            [1,1,1,1,1,1,1,1,1,1],
-            [1,0,0,0,1,1,0,0,0,1],
-            [1,0,1,0,1,0,0,1,0,1],
-            [1,0,1,0,1,0,1,1,1,1],
-            [1,0,0,0,0,0,0,0,0,1],
-            [1,1,1,1,0,1,1,1,0,1],
-            [1,0,0,0,0,0,0,0,0,1],
-            [1,0,1,1,1,0,1,1,0,1],
-            [1,0,0,0,0,0,0,0,0,1],
-            [1,1,1,1,1,1,1,1,1,1]
-            ];
-        
         // Go through our list of block locations and create blocks in the right places.
         for (var r=0;r<blockArray.length;r++) {
             
-            for (var c=0; c<blockArray[r].length;c++) {
-                console.log("Column",c);
-                console.log("Row",r);
-                
+            for (var c=0; c<blockArray[r].length;c++) {                
                 // Only create a block if there is a 1 in the list in this spot.
                 if(blockArray[r][c]==1) {
                    var block=game.add.sprite(c*50,r*50,'block');
