@@ -95,6 +95,11 @@ var playState = {
         this.enemies = this.game.add.physicsGroup();
         this.map.createFromObjects('Objects', 'enemy', 'tileset', 2, true, false, this.enemies);
         game.physics.arcade.enable(this.enemies);
+        // Enemies are always moving (creepy) so we can just set their run as always on
+        this.enemies.forEach(function(enemy){
+            enemy.animations.add('run', [2, 6], 10, true);
+            enemy.animations.play('run');
+        });
     },
     
     // Handle player movement
