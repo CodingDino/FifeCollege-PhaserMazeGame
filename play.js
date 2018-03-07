@@ -1,5 +1,5 @@
 // Note the globals that will be used:
-/* global   game */
+/* global   game, Phaser */
 
 var playState = {
 
@@ -73,6 +73,13 @@ var playState = {
         // There can only be one key...
         this.key = keys.getFirstExists();
         game.physics.arcade.enable(this.key);
+        // Let's make the key pulse using a tween
+        var keyTween = game.add.tween(this.key.scale);
+        keyTween.to({x: 1.25, y:1.25}, 500); // scale up to 1.25 over 500 ms
+        keyTween.to({x: 1, y:1}, 500); // scale back to 1 over 500 ms
+        keyTween.easing(Phaser.Easing.Quadratic.InOut); // this controls the effect over time
+        keyTween.loop() // loop this tween forever
+        keyTween.start() // start the tween now
         
         // Door
         var doors = this.game.add.physicsGroup();
