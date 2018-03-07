@@ -100,19 +100,6 @@
          "tilecount":6,
          "tileheight":50,
          "tilewidth":50
-        }, 
-        {
-         "columns":3,
-         "firstgid":7,
-         "image":"TileSheet.png",
-         "imageheight":100,
-         "imagewidth":150,
-         "margin":0,
-         "name":"Tileset",
-         "spacing":0,
-         "tilecount":6,
-         "tileheight":50,
-         "tilewidth":50
         }],
  "tilewidth":50,
  "type":"map",
