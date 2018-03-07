@@ -58,10 +58,6 @@ var playState = {
         baddies.add(baddy1);
         baddies.add(baddy2);
         
-        // create key
-        key = game.add.sprite(150,50,'key');
-        game.physics.arcade.enable(key);
-        
         // create door
         door = game.add.sprite(400,100,'door');
         game.physics.arcade.enable(door);
@@ -87,7 +83,7 @@ var playState = {
         game.physics.arcade.overlap(player,baddies, this.loseGame, null, this);
         //game.physics.arcade.collide(maze,baddies);
         game.physics.arcade.collide(baddies,baddies);
-        game.physics.arcade.overlap(player,key, this.pickupKey, null, this);
+        game.physics.arcade.overlap(player,this.key, this.pickupKey, null, this);
         game.physics.arcade.overlap(player,door, this.winGame, null, this);
         
         // Changed 'maze' into 'this.layer'
@@ -132,11 +128,20 @@ var playState = {
         // Add the tileset to the map
         this.map.addTilesetImage('tileset');
         // Create the layer, by specifying the name of the Tiled layer
-        this.layer = this.map.createLayer('Tile Layer 1');
+        this.layer = this.map.createLayer('Maze');
         // Set the world size to match the size of the layer
         this.layer.resizeWorld();
         // Enable collisions for the first element of our tileset (the blue wall)
         this.map.setCollision(1);
+        
+        // Create objects on the map
+        
+        // Key
+        this.key = this.game.add.physicsGroup();
+        this.map.createFromObjects('Objects', 'key', 'tileset', 4, true, false, this.key);
+        game.physics.arcade.enable(this.key);
+        
+        
     },
     
     // Handle player movement
@@ -175,7 +180,11 @@ var playState = {
     // Handle the key being picked up
     pickupKey: function() {
         keyPickup.play();
-        key.kill();
+
+        this.key.forEach(function(key) {
+            key.kill();
+        });
+
         gotKey = true;
     },
     
@@ -266,7 +275,7 @@ var playState = {
 };
 
 // the variables we will be using for our game.
-var maze, player, baddies, key, door, keyPickup, 
+var maze, player, baddies, door, keyPickup, 
     winGame, timeLeft, timeLabel, 
     cursors, gameOver, gotKey, frameCount = 0,
     levels, currentLevel = 0;

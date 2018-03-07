@@ -22,16 +22,15 @@ var loadState = {
         
         // load graphics
         game.load.image('player', 'assets/player.png');
-        //game.load.image('block', 'assets/block.png');
         game.load.image('baddy', 'assets/baddy.png');
-        game.load.image('key', 'assets/key.png');
         game.load.image('door', 'assets/door.png');
         
         // load audio
         game.load.audio('pickup', 'assets/pickup.wav');
         game.load.audio('win', 'assets/win.wav');
         
-        game.load.image('tileset', 'assets/block.png');
+        // Load tilemap
+        game.load.spritesheet('tileset', 'assets/tileset.png', 50, 50);
         game.load.tilemap('map', 'assets/tilemap.json', null, Phaser.Tilemap.TILED_JSON);
     },
     
