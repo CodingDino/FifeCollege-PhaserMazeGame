@@ -1,5 +1,6 @@
 // Note the globals that will be used:
-/* global   game */
+/* global   game,
+            Phaser */
 
 var loadState = {
     
@@ -21,7 +22,7 @@ var loadState = {
         
         // load graphics
         game.load.image('player', 'assets/player.png');
-        game.load.image('block', 'assets/block.png');
+        //game.load.image('block', 'assets/block.png');
         game.load.image('baddy', 'assets/baddy.png');
         game.load.image('key', 'assets/key.png');
         game.load.image('door', 'assets/door.png');
@@ -29,6 +30,9 @@ var loadState = {
         // load audio
         game.load.audio('pickup', 'assets/pickup.wav');
         game.load.audio('win', 'assets/win.wav');
+        
+        game.load.image('tileset', 'assets/block.png');
+        game.load.tilemap('map', 'assets/tilemap.json', null, Phaser.Tilemap.TILED_JSON);
     },
     
     // state.create is called after preload finishes

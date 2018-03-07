@@ -43,7 +43,8 @@ var playState = {
             [1,0,0,0,0,0,0,0,0,1],
             [1,1,1,1,1,1,1,1,1,1]
         ]];
-        this.buildMaze(levels[currentLevel]);
+        //this.buildMaze(levels[currentLevel]);
+        this.buildMazeFromFile();
         
         // create player & add physics to them
         player = game.add.sprite(60,405,'player');
@@ -82,12 +83,16 @@ var playState = {
     update: function() {
         
         // set up collisions
-        game.physics.arcade.collide(player,maze);
+        //game.physics.arcade.collide(player,maze);
         game.physics.arcade.overlap(player,baddies, this.loseGame, null, this);
-        game.physics.arcade.collide(maze,baddies);
+        //game.physics.arcade.collide(maze,baddies);
         game.physics.arcade.collide(baddies,baddies);
         game.physics.arcade.overlap(player,key, this.pickupKey, null, this);
         game.physics.arcade.overlap(player,door, this.winGame, null, this);
+        
+        // Changed 'maze' into 'this.layer'
+        game.physics.arcade.collide(player, this.layer);
+        game.physics.arcade.collide(baddies, this.layer);
         
         this.movePlayer();
         this.moveBaddy();
@@ -118,6 +123,20 @@ var playState = {
         
         // Set all objects in the maze to be immovable - they won't get moved by the physics.
         maze.setAll('body.immovable', true);
+    },
+    
+    buildMazeFromFile: function()
+    {
+        // Create the tilemap
+        this.map = game.add.tilemap('map');
+        // Add the tileset to the map
+        this.map.addTilesetImage('tileset');
+        // Create the layer, by specifying the name of the Tiled layer
+        this.layer = this.map.createLayer('Tile Layer 1');
+        // Set the world size to match the size of the layer
+        this.layer.resizeWorld();
+        // Enable collisions for the first element of our tileset (the blue wall)
+        this.map.setCollision(1);
     },
     
     // Handle player movement
