@@ -97,6 +97,7 @@ var playState = {
         this.player.animations.add('run', [1, 5], 10, true);
         this.player.animations.add('stand', [1], 10, true);
         this.player.animations.play('stand');
+        game.camera.follow(this.player);
         
         // Enemies
         this.enemies = this.game.add.physicsGroup();
@@ -113,14 +114,10 @@ var playState = {
     movePlayer: function() {
         // Left/Right Movement
         if (cursors.left.isDown) {
-            if (this.player.x > 0) {
-                this.player.body.velocity.x = -200;
-            }       
+            this.player.body.velocity.x = -200;      
         }
         else if (cursors.right.isDown) {
-            if (this.player.x < 460) {
-                this.player.body.velocity.x = 200;
-            }
+            this.player.body.velocity.x = 200;
         }
         else {
             this.player.body.velocity.x = 0;
@@ -128,14 +125,10 @@ var playState = {
         
         // Up/Down Movement
         if (cursors.up.isDown) {
-             if (this.player.y > 0) {
-                 this.player.body.velocity.y = -200;
-             }           
+            this.player.body.velocity.y = -200;
         }
         else if (cursors.down.isDown) {
-            if (this.player.y < 460) {
-                this.player.body.velocity.y = 200;
-            }
+            this.player.body.velocity.y = 200;
         } 
         else {
             this.player.body.velocity.y = 0;
