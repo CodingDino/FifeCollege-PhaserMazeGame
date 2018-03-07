@@ -26,7 +26,55 @@
                  "visible":true,
                  "width":50,
                  "x":151.181980374665,
-                 "y":98.5950044603033
+                 "y":100.595004460303
+                }, 
+                {
+                 "gid":4,
+                 "height":50,
+                 "id":4,
+                 "name":"door",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":50,
+                 "x":400.958965209634,
+                 "y":150.658340767172
+                }, 
+                {
+                 "gid":2,
+                 "height":50,
+                 "id":5,
+                 "name":"player",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":50,
+                 "x":51,
+                 "y":450
+                }, 
+                {
+                 "gid":3,
+                 "height":50,
+                 "id":6,
+                 "name":"enemy",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":50,
+                 "x":49,
+                 "y":102
+                }, 
+                {
+                 "gid":3,
+                 "height":50,
+                 "id":7,
+                 "name":"enemy",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":50,
+                 "x":299,
+                 "y":451
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -34,7 +82,7 @@
          "x":0,
          "y":0
         }],
- "nextobjectid":2,
+ "nextobjectid":8,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.1.2",
