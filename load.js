@@ -26,7 +26,9 @@ var loadState = {
         
         // Load tilemap
         game.load.spritesheet('tileset', 'assets/tileset.png', 50, 50);
-        game.load.tilemap('map', 'assets/level_2.json', null, Phaser.Tilemap.TILED_JSON);
+        game.load.tilemap('map1', 'assets/level_1.json', null, Phaser.Tilemap.TILED_JSON);
+        game.load.tilemap('map2', 'assets/level_2.json', null, Phaser.Tilemap.TILED_JSON);
+        numLevels = 2; // Update this if we add more levels!
     },
     
     // state.create is called after preload finishes
@@ -35,3 +37,5 @@ var loadState = {
         game.state.start('menu');
     },
 };
+
+var numLevels;

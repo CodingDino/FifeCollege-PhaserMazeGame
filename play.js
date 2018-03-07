@@ -1,5 +1,5 @@
 // Note the globals that will be used:
-/* global   game, Phaser */
+/* global   game, Phaser, numLevels */
 
 var playState = {
 
@@ -17,7 +17,11 @@ var playState = {
         
         // make maze
         // This will also create the enemies, player, key, and door
-        this.buildMazeFromFile();
+        if (this.currentLevel == null)
+            this.currentLevel = 1;
+        else
+            ++this.currentLevel
+        this.buildMazeFromFile(this.currentLevel);
         
         // create sound references for use later
         keyPickup = game.add.audio('pickup');
@@ -46,16 +50,16 @@ var playState = {
         game.physics.arcade.collide(this.enemies, this.layer);
         
         this.movePlayer();
-        this.moveBaddy();
+        //this.moveBaddy();
         this.countDown();
     },
     
     // Maze building function - creates maze based on file.
     // Later we can improve this to pass in what file we want to use
-    buildMazeFromFile: function()
+    buildMazeFromFile: function(_level)
     {
         // Create the tilemap
-        this.map = game.add.tilemap('map');
+        this.map = game.add.tilemap('map'+_level);
         // Add the tileset to the map
         this.map.addTilesetImage('tileset');
         // Create the layer, by specifying the name of the Tiled layer
@@ -162,21 +166,28 @@ var playState = {
             // Play winning sound
             winGame.play();
             
-            // display message
-            var messageLabel = game.add.text(100, 250, 
-                                             'YOU ESCAPED!',
-                                             { font: '40px Arial', fill: '#ff0000' });
-            messageLabel.fixedToCamera = true;
+            // if we are at the last level, we have beaten the game!
+            if (this.currentLevel == numLevels) {
+                // display message
+                var messageLabel = game.add.text(100, 250, 
+                                                 'YOU ESCAPED!',
+                                                 { font: '40px Arial', fill: '#ff0000' });
+                messageLabel.fixedToCamera = true;
 
-            // Kill player and baddy sprites
-            this.player.kill();
+                // Kill player and baddy sprites
+                this.player.kill();
 
-            this.enemies.forEach(function(enemy) {
-                enemy.kill();
-            });
+                this.enemies.forEach(function(enemy) {
+                    enemy.kill();
+                });
 
-            // Set gameOver variable
-            gameOver = true; 
+                // Set gameOver variable
+                gameOver = true; 
+            }
+            else {
+                game.state.start('play');
+            }
+            
         }
         
     },
