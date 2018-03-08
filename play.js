@@ -19,8 +19,6 @@ var playState = {
         // This will also create the enemies, player, key, and door
         if (this.currentLevel == null)
             this.currentLevel = 1;
-        else
-            ++this.currentLevel
         this.buildMazeFromFile(this.currentLevel);
         
         // create sound references for use later
@@ -34,6 +32,17 @@ var playState = {
         
         // initialise keyboard cursors
         cursors = game.input.keyboard.createCursorKeys();
+        
+         // Create the shadow texture
+        this.shadowTexture = this.game.add.bitmapData(this.game.width, this.game.height);
+
+        // Create an object that will use the bitmap as a texture
+        this.lightSprite = this.game.add.image(0, 0, this.shadowTexture);
+        this.lightSprite.fixedToCamera = true;
+        
+        // Set the blend mode to MULTIPLY. This will darken the colors of
+        // everything below this sprite.
+        this.lightSprite.blendMode = Phaser.blendModes.MULTIPLY;
     },
     
     // state.update is called every frame
@@ -50,8 +59,14 @@ var playState = {
         game.physics.arcade.collide(this.enemies, this.layer);
         
         this.movePlayer();
-        //this.moveBaddy();
+        this.moveBaddy();
         this.countDown();
+        
+        // Update the shadow
+        // You can change the radius (100) to be larger or smaller
+        this.updateShadowTexture ( { x: this.player.x + this.player.width/2 - game.camera.x,
+                                     y: this.player.y + this.player.height/2 - game.camera.y}, 
+                                   100 );
     },
     
     // Maze building function - creates maze based on file.
@@ -185,6 +200,8 @@ var playState = {
                 gameOver = true; 
             }
             else {
+                // make a higher level and restart the play state
+                ++this.currentLevel
                 game.state.start('play');
             }
             
@@ -240,6 +257,34 @@ var playState = {
         
 
     },
+    
+    updateShadowTexture: function(position, radius) {
+        // This function updates the shadow texture (this.shadowTexture).
+        // First, it fills the entire texture with a dark shadow color.
+        // Then it draws a white circle centered on the pointer position.
+        // Because the texture is drawn to the screen using the MULTIPLY
+        // blend mode, the dark areas of the texture make all of the colors
+        // underneath it darker, while the white area is unaffected.
+
+        // Draw shadow
+        // Decrease the RGB numbers to make the shadow darker
+        // 0 will be black
+        this.shadowTexture.context.fillStyle = 'rgb(100, 100, 100)';
+        this.shadowTexture.context.fillRect(0, 0, this.game.width, this.game.height);
+
+        // Draw circle of light
+        this.shadowTexture.context.beginPath();
+        // You could change the fill colour here from white to a darker colour 
+        // back and forth over time, along with a changing radius,
+        // to simulate "flickering"
+        this.shadowTexture.context.fillStyle = 'rgb(255, 255, 255)';
+        this.shadowTexture.context.arc(position.x, position.y,
+            radius, 0, Math.PI*2);
+        this.shadowTexture.context.fill();
+
+        // This just tells the engine it should update the texture cache
+        this.shadowTexture.dirty = true;
+    }
 };
 
 // the variables we will be using for our game.
