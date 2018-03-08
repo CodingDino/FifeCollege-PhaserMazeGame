@@ -92,6 +92,7 @@ var playState = {
         // There can only be one key...
         this.key = keys.getFirstExists();
         game.physics.arcade.enable(this.key);
+        
         // Let's make the key pulse using a tween
         var keyTween = game.add.tween(this.key.scale);
         keyTween.to({x: 1.25, y:1.25}, 500); // scale up to 1.25 over 500 ms
@@ -99,6 +100,27 @@ var playState = {
         keyTween.easing(Phaser.Easing.Quadratic.InOut); // this controls the effect over time
         keyTween.loop() // loop this tween forever
         keyTween.start() // start the tween now
+        // Change the key's anchor point so the tween looks better
+        this.key.anchor.x = 0.5;
+        this.key.anchor.y = 0.5;
+        this.key.x += this.key.width/2;
+        this.key.y += this.key.height/2;
+        
+        // let's make the key emit particles
+        this.emitter = game.add.emitter(this.key.x, this.key.y, 5);
+        // Set the 'pixel' image for the particles
+        this.emitter.makeParticles('pixel');
+        // Set the y speed of the particles between -150 and 150
+        // The speed will be randomly picked between -150 and 150 for each particle
+        this.emitter.setYSpeed(-50, 50);
+        // Do the same for the x speed
+        this.emitter.setXSpeed(-50, 50);
+        // Change alpha over time from 1 to 0
+        this.emitter.setAlpha(1, 0, 1000);
+        // Use no gravity for the particles
+        this.emitter.gravity = 0;
+        // start our emitter
+        this.emitter.flow(1000);
         
         // Door
         var doors = this.game.add.physicsGroup();

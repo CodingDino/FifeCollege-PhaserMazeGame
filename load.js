@@ -20,6 +20,9 @@ var loadState = {
         
         // Load all our assets
         
+        // Graphics
+        game.load.image('pixel', 'assets/pixel.png');
+        
         // load audio
         game.load.audio('pickup', 'assets/pickup.wav');
         game.load.audio('win', 'assets/win.wav');
