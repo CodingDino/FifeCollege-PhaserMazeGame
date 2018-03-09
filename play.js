@@ -13,7 +13,6 @@ var playState = {
         // Reset our variables from last play through
         timeLeft = 30;
         gameOver = false;
-        gotKey = false;
         
         // make maze
         // This will also create the enemies, player, key, and door
@@ -51,7 +50,9 @@ var playState = {
         // set up collisions
         game.physics.arcade.overlap(this.player,this.enemies, this.loseGame, null, this);
         game.physics.arcade.collide(this.enemies,this.enemies);
-        game.physics.arcade.overlap(this.player,this.key, this.pickupKey, null, this);
+        this.items.forEach(function(item){
+            game.physics.arcade.overlap(this.player,item, this.collectItem, null, this);
+        });
         game.physics.arcade.overlap(this.player,this.door, this.winGame, null, this);
         
         // Changed 'maze' into 'this.layer'
@@ -59,7 +60,7 @@ var playState = {
         game.physics.arcade.collide(this.enemies, this.layer);
         
         this.movePlayer();
-        this.moveBaddy();
+        //this.moveBaddy();
         this.countDown();
         
         // Update the shadow
@@ -86,12 +87,21 @@ var playState = {
         
         // Create objects on the map
         
+        // Items
+        this.inventory = new Array(0);
+        this.items = this.game.add.physicsGroup();
+        
         // Key
-        var keys = this.game.add.physicsGroup();
-        this.map.createFromObjects('Objects', 'key', 'tileset', 4, true, false, keys);
+        this.map.createFromObjects('Objects', 'key', 'tileset', 4, true, false, this.items);
         // There can only be one key...
-        this.key = keys.getFirstExists();
+        this.key = this.items.getByName("key");
         game.physics.arcade.enable(this.key);
+        this.items.add(this.key);
+        // Item settings
+        this.key.collectSound = keyPickup;
+        this.key.onCollect = function() {
+            this.emitter.on = false;
+        }
         
         // Let's make the key pulse using a tween
         var keyTween = game.add.tween(this.key.scale);
@@ -187,19 +197,20 @@ var playState = {
     },
     
     // Handle the key being picked up
-    pickupKey: function() {
-        keyPickup.play();
-
-        this.key.kill();
-
-        gotKey = true;
+    collectItem: function(player, item) {
+        this.inventory.pus(item.name);
+        if (item.collectSound != null)
+            item.collectSound.play();
+        if (item.onCollect != null)
+            item.onCollect();
+        item.kill();
     },
     
     // If the player touches the door with the key, win the game!
     winGame: function() {
         
         // Only do winning logic if the player has the key!
-        if (gotKey == true) {
+        if (this.inventory.indexOf("key") > -1) {
             // Play winning sound
             winGame.play();
             
@@ -311,4 +322,4 @@ var playState = {
 
 // the variables we will be using for our game.
 var keyPickup, winGame, timeLeft, timeLabel, 
-    cursors, gameOver, gotKey, frameCount = 0;
+    cursors, gameOver, frameCount = 0;
