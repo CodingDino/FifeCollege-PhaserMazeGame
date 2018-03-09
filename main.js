@@ -23,6 +23,11 @@ var mainState = {
                           'assets/level_1.json', 
                           null, 
                           Phaser.Tilemap.TILED_JSON);
+        game.load.tilemap('map2', 
+                          'assets/level_2.json', 
+                          null, 
+                          Phaser.Tilemap.TILED_JSON);
+        numLevels = 2; // Update this if we add more levels
         
     },
     
@@ -36,7 +41,9 @@ var mainState = {
         // initialise keyboard cursors
         cursors = game.input.keyboard.createCursorKeys();
         
-        this.buildMazeFromFile(1);
+        if (this.currentLevel == null)
+            this.currentLevel = 1;
+        this.buildMazeFromFile(this.currentLevel);
         
 
         
@@ -50,7 +57,7 @@ var mainState = {
     // Update called every frame thereafter
     update: function () {
         this.movePlayer();
-        this.moveBaddy();
+        //this.moveBaddy();
         this.countDown();
         
         game.physics.arcade.collide(player,this.layer);
@@ -182,14 +189,24 @@ var mainState = {
     
     
     winGame: function(){
+        
         if(gotKey==true){
-            winGame.play();
-            // display message
-            var messageLabel = game.add.text(100, 250, 'YOU ESCAPED!',{ font: '40px Arial', fill: '#ff0000' });
-            messageLabel.fixedToCamera=true;
-            player.kill();
-            gameOver=true;
+            
+            if (this.currentLevel == numLevels) {
+                winGame.play();
+                // display message
+                var messageLabel = game.add.text(100, 250, 'YOU ESCAPED!',{ font: '40px Arial', fill: '#ff0000' });
+                messageLabel.fixedToCamera=true;
+                player.kill();
+                gameOver=true;  
+            }
+            else {
+                ++this.currentLevel;
+                game.state.start('main');
+            }
+
         }
+        
     },
     
     moveBaddy: function(){
@@ -233,7 +250,7 @@ var mainState = {
     },
 };
 
-var player, cursors, maze, gotKey = false, timeLeft = 30, gameOver = false, frameCount = 0;
+var player, cursors, maze, gotKey = false, timeLeft = 30, gameOver = false, frameCount = 0, numLevels;
 
 var game = new Phaser.Game(500, 500, Phaser.AUTO, 'gameDiv');
 game.state.add('main', mainState);
