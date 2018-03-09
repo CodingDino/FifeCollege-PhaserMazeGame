@@ -42,9 +42,7 @@ var mainState = {
         
         this.buildMazeFromFile(1);
         
-        // create key
-        key = game.add.sprite(150,50,'key');
-        game.physics.arcade.enable(key);
+
         
         // sound
         keyPickup = game.add.audio('pickup');
@@ -131,6 +129,13 @@ var mainState = {
         this.layer.resizeWorld();
         // Enable collisions with the first element of our tileset (the wall)
         this.map.setCollision(1);
+        
+        
+        // create key
+        var keys = game.add.physicsGroup();
+        this.map.createFromObjects('Objects', 'key', 'tileset', 4, true, false, keys);
+        key = keys.getFirstExists();
+        game.physics.arcade.enable(key);
         
     }, // end buildMazeFromFile() 
     
