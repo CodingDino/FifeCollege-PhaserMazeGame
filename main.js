@@ -14,6 +14,16 @@ var mainState = {
         game.load.audio('pickup', 'assets/pickup.wav');
         game.load.audio('win', 'assets/win.wav');
         
+        // load tilemap
+        game.load.spritesheet('tileset', 
+                              'assets/tileset.png', 
+                              50, 
+                              50);
+        game.load.tilemap('map1', 
+                          'assets/level_1.json', 
+                          null, 
+                          Phaser.Tilemap.TILED_JSON);
+        
     },
     
     // Create function called after preload finishes
@@ -30,7 +40,7 @@ var mainState = {
         // initialise keyboard cursors
         cursors = game.input.keyboard.createCursorKeys();
         
-        this.buildMaze();
+        this.buildMazeFromFile(1);
         
         // create key
         key = game.add.sprite(150,50,'key');
@@ -63,8 +73,8 @@ var mainState = {
         this.moveBaddy();
         this.countDown();
         
-        game.physics.arcade.collide(player,maze);
-        game.physics.arcade.collide(baddies,maze);
+        game.physics.arcade.collide(player,this.layer);
+        game.physics.arcade.collide(baddies,this.layer);
         game.physics.arcade.overlap(player, key, 
                                     this.showExit, 
                                     null, this);
@@ -107,6 +117,23 @@ var mainState = {
             player.body.velocity.y=0;
         }
     },
+    
+    // Maze building function - creates a maze based on a file
+    // we pass in the number for the file we want to use
+    buildMazeFromFile: function(level) {
+        // Create the tilemap
+        this.map = game.add.tilemap('map'+level);
+        // Add the tileset to the map
+        this.map.addTilesetImage('tileset');
+        // Create the layer, by specifying the name of the Tiled layer
+        this.layer = this.map.createLayer('maze');
+        // Set the world size to match the size of the layer
+        this.layer.resizeWorld();
+        // Enable collisions with the first element of our tileset (the wall)
+        this.map.setCollision(1);
+        
+    }, // end buildMazeFromFile() 
+    
     
     buildMaze: function(){
         // make maze a group of objects
