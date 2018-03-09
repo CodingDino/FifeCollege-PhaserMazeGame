@@ -27,6 +27,54 @@
                  "width":50,
                  "x":149,
                  "y":150
+                }, 
+                {
+                 "gid":4,
+                 "height":50,
+                 "id":2,
+                 "name":"door",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":50,
+                 "x":399,
+                 "y":149
+                }, 
+                {
+                 "gid":3,
+                 "height":50,
+                 "id":4,
+                 "name":"enemy",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":50,
+                 "x":400,
+                 "y":252
+                }, 
+                {
+                 "gid":3,
+                 "height":50,
+                 "id":5,
+                 "name":"enemy",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":50,
+                 "x":400,
+                 "y":356
+                }, 
+                {
+                 "gid":2,
+                 "height":50,
+                 "id":7,
+                 "name":"player",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":50,
+                 "x":50,
+                 "y":353
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -34,7 +82,7 @@
          "x":0,
          "y":0
         }],
- "nextobjectid":2,
+ "nextobjectid":8,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"2018.02.14",

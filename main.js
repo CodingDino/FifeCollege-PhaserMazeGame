@@ -33,10 +33,6 @@ var mainState = {
         game.stage.backgroundColor = '#5474cb';
         game.physics.startSystem(Phaser.Physics.ARCADE); // start the physics engine
         
-        //create player
-        player = game.add.sprite(60, 405, 'player');
-        game.physics.arcade.enable(player);
-        
         // initialise keyboard cursors
         cursors = game.input.keyboard.createCursorKeys();
         
@@ -47,20 +43,6 @@ var mainState = {
         // sound
         keyPickup = game.add.audio('pickup');
         winGame = game.add.audio('win');
-        
-        //create door
-        door = game.add.sprite(400,100,'door');
-        game.physics.arcade.enable(door);
-        
-        baddies = game.add.group();
-        baddies.enableBody = true; // add physics to the baddies
-        
-        // create baddy
-        baddy1=game.add.sprite(60,60,'baddy');
-        baddy2=game.add.sprite(310,410,'baddy');
-        
-        baddies.add(baddy1);
-        baddies.add(baddy2);
         
         timeLabel = game.add.text(300,10, "TIME: "+ timeLeft,{ font: '12px Arial', fill: '#ffffff', align: 'left' });
     },
@@ -137,6 +119,22 @@ var mainState = {
         key = keys.getFirstExists();
         game.physics.arcade.enable(key);
         
+        //create player
+        var players = game.add.physicsGroup();
+        this.map.createFromObjects('Objects', 'player', 'tileset', 1, true, false, players);
+        player = players.getFirstExists();
+        game.physics.arcade.enable(player);
+        
+        //create door
+        var doors = game.add.physicsGroup();
+        this.map.createFromObjects('Objects', 'door', 'tileset', 3, true, false, doors);
+        door = doors.getFirstExists();
+        game.physics.arcade.enable(door);
+        
+        // create baddies
+        baddies = game.add.physicsGroup();
+        this.map.createFromObjects('Objects', 'enemy', 'tileset', 2, true, false, baddies);
+        
     }, // end buildMazeFromFile() 
     
     
@@ -196,30 +194,20 @@ var mainState = {
     
     moveBaddy: function(){
         
-        if (player.x>baddy1.x){
-            baddy1.body.velocity.x=80;
-        }else if (player.x<baddy1.x){
-            baddy1.body.velocity.x=-80;
-        }
-        
-        if (player.y>baddy1.y){
-            baddy1.body.velocity.y=80;
-        }else if (player.y<baddy1.y){
-            baddy1.body.velocity.y=-80;
-        }
-        
-        if (player.x>baddy2.x){
-            baddy2.body.velocity.x=100;
-        }else if (player.x<baddy2.x){
-            baddy2.body.velocity.x=-100;
-        }
-        
-        if (player.y>baddy2.y){
-            baddy2.body.velocity.y=100;
-        }else if (player.y<baddy2.y){
-            baddy2.body.velocity.y=-100;
-        }
+        baddies.forEach( function (baddy) {
+            if (player.x>baddy.x){
+                baddy.body.velocity.x=80;
+            }else if (player.x<baddy.x){
+                baddy.body.velocity.x=-80;
+            }
 
+            if (player.y>baddy.y){
+                baddy.body.velocity.y=80;
+            }else if (player.y<baddy.y){
+                baddy.body.velocity.y=-80;
+            }
+        } ); // end baddies.forEach
+        
     },
     
     endGame: function () {
