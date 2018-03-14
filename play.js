@@ -21,7 +21,6 @@ var playState = {
         this.buildMazeFromFile(this.currentLevel);
         
         // create sound references for use later
-        keyPickup = game.add.audio('pickup');
         winGame = game.add.audio('win');
         
         // text label showing time left in the game.
@@ -50,9 +49,7 @@ var playState = {
         // set up collisions
         game.physics.arcade.overlap(this.player,this.enemies, this.loseGame, null, this);
         game.physics.arcade.collide(this.enemies,this.enemies);
-        this.items.forEach(function(item){
-            game.physics.arcade.overlap(this.player,item, this.collectItem, null, this);
-        });
+        game.physics.arcade.overlap(this.player, this.items, this.collectItem, null, this);
         game.physics.arcade.overlap(this.player,this.door, this.winGame, null, this);
         
         // Changed 'maze' into 'this.layer'
@@ -98,9 +95,9 @@ var playState = {
         game.physics.arcade.enable(this.key);
         this.items.add(this.key);
         // Item settings
-        this.key.collectSound = keyPickup;
-        this.key.onCollect = function() {
-            this.emitter.on = false;
+        this.key.collectSound = game.add.audio('pickup');
+        this.key.onCollect = function(state) {
+            state.emitter.on = false;
         }
         
         // Let's make the key pulse using a tween
@@ -198,19 +195,26 @@ var playState = {
     
     // Handle the key being picked up
     collectItem: function(player, item) {
-        this.inventory.pus(item.name);
+        console.log("collectItem");
+        this.inventory.push(item.name);
         if (item.collectSound != null)
             item.collectSound.play();
         if (item.onCollect != null)
-            item.onCollect();
+            item.onCollect(this);
         item.kill();
+    },
+    
+    // Function to check if an item is in our inventory
+    hasItem: function(itemName) {
+        return this.inventory.indexOf(itemName) > -1;
     },
     
     // If the player touches the door with the key, win the game!
     winGame: function() {
+        console.log("winGame");
         
         // Only do winning logic if the player has the key!
-        if (this.inventory.indexOf("key") > -1) {
+        if (this.hasItem("key")) {
             // Play winning sound
             winGame.play();
             
@@ -244,6 +248,7 @@ var playState = {
     
     // If the player touches a baddy, lose the game!
     loseGame: function() {
+        console.log("loseGame");
         // This causes the state (level) to reload from the beginning!
         game.state.start('play');
     },
@@ -321,5 +326,5 @@ var playState = {
 };
 
 // the variables we will be using for our game.
-var keyPickup, winGame, timeLeft, timeLabel, 
+var winGame, timeLeft, timeLabel, 
     cursors, gameOver, frameCount = 0;
