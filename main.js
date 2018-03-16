@@ -27,7 +27,11 @@ var mainState = {
                           'assets/level_2.json', 
                           null, 
                           Phaser.Tilemap.TILED_JSON);
-        numLevels = 2; // Update this if we add more levels
+        game.load.tilemap('map3', 
+                          'assets/level_3.json', 
+                          null, 
+                          Phaser.Tilemap.TILED_JSON);
+        numLevels = 3; // Update this if we add more levels
         
     },
     
@@ -75,32 +79,18 @@ var mainState = {
     
     movePlayer: function() {
         if (cursors.left.isDown) {
-             if (player.x>0){
-                 player.body.velocity.x=-200;
-             }
-                       
-        } else if (cursors.right.isDown){
-            if (player.x<460){
-                player.body.velocity.x=200;
-            }
-            
-        }else{
+            player.body.velocity.x=-200;        
+        } else if (cursors.right.isDown) {
+            player.body.velocity.x=200;
+        } else {
             player.body.velocity.x=0;
         }
         
-        
-        if (cursors.up.isDown){
-             if (player.y>0){
-                 player.body.velocity.y=-200;
-             }
-                       
-        }else if (cursors.down.isDown){
-            if (player.y<460){
-                player.body.velocity.y=200;
-            }
-            
-        }else{
-            
+        if (cursors.up.isDown) {
+            player.body.velocity.y=-200;     
+        } else if (cursors.down.isDown) {
+            player.body.velocity.y=200;
+        } else {
             player.body.velocity.y=0;
         }
     },
@@ -131,6 +121,7 @@ var mainState = {
         this.map.createFromObjects('Objects', 'player', 'tileset', 1, true, false, players);
         player = players.getFirstExists();
         game.physics.arcade.enable(player);
+        game.camera.follow(player);
         
         //create door
         var doors = game.add.physicsGroup();
