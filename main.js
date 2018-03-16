@@ -93,6 +93,15 @@ var mainState = {
         } else {
             player.body.velocity.y=0;
         }
+        
+        // animation
+        if (player.body.velocity.x != 0 || player.body.velocity.y != 0) {
+            player.animations.play('run');
+        }
+        else
+        {
+            player.animations.play('stand');
+        }
     },
     
     // Maze building function - creates a maze based on a file
@@ -122,6 +131,9 @@ var mainState = {
         player = players.getFirstExists();
         game.physics.arcade.enable(player);
         game.camera.follow(player);
+        player.animations.add('run', [1, 5], 10, true);
+        player.animations.add('stand', [1], 10, true);
+        player.animations.play('stand');
         
         //create door
         var doors = game.add.physicsGroup();
