@@ -144,6 +144,10 @@ var mainState = {
         // create baddies
         baddies = game.add.physicsGroup();
         this.map.createFromObjects('Objects', 'enemy', 'tileset', 2, true, false, baddies);
+        baddies.forEach(function(enemy){
+            enemy.animations.add('run', [2, 6], 10, true);
+            enemy.animations.play('run');
+        });
         
     }, // end buildMazeFromFile() 
     
