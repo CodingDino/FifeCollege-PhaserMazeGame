@@ -56,6 +56,13 @@ var mainState = {
         winGame = game.add.audio('win');
         
         timeLabel = game.add.text(300,10, "TIME: "+ timeLeft,{ font: '12px Arial', fill: '#ffffff', align: 'left' });
+        
+        
+        // Light and shadow
+        this.shadowTexture = game.add.bitmapData(game.width, game.height);
+        var lightSprite = game.add.image(0,0,this.shadowTexture);
+        lightSprite.fixedToCamera = true;
+        lightSprite.blendMode = Phaser.blendModes.MULTIPLY;
     },
     
     // Update called every frame thereafter
@@ -75,6 +82,13 @@ var mainState = {
         game.physics.arcade.overlap(player, baddies, 
                                     this.endGame, 
                                     null, this);
+        
+        // Update the Shadow
+        // You can change the radius (100) to be larger or smaller
+        this.updateShadowTexture( { 
+                                    x: player.x + player.width/2 - game.camera.x, 
+                                    y: player.y + player.height/2 - game.camera.y },
+                                100 )
     },
     
     movePlayer: function() {
@@ -124,6 +138,20 @@ var mainState = {
         this.map.createFromObjects('Objects', 'key', 'tileset', 4, true, false, keys);
         key = keys.getFirstExists();
         game.physics.arcade.enable(key);
+        
+        // Grow and Shrink the Key Using Tween
+        var keyTween = game.add.tween(key.scale);
+        keyTween.to({x: 1.25, y:1.25}, 500); // scale up to 1.25 over 500 ms
+        keyTween.to({x: 1, y: 1}, 500); // scale down to 1 over 500 ms
+        keyTween.easing(Phaser.Easing.Quadratic.InOut); // this controls the effect over time
+        keyTween.loop(); // loop this tween forever
+        keyTween.start(); // start the tween now
+        // Change the key's anchor point so the tween looks better
+        key.anchor.x = 0.5;
+        key.anchor.y = 0.5;
+        key.x += key.width/2;
+        key.y += key.height/2;
+        
         
         //create player
         var players = game.add.physicsGroup();
@@ -255,6 +283,27 @@ var mainState = {
             }
         }
     },
+    
+    updateShadowTexture: function(position, radius)
+    {
+        // Draw the shadow
+        // Decrease the RGB numbers to make the shadow darker
+        // 0 will be black
+        this.shadowTexture.context.fillStyle = 'rgb(100, 100, 100)';
+        this.shadowTexture.context.fillRect(0, 0, game.width, game.height);
+        
+        // Draw the circle of light
+        this.shadowTexture.context.beginPath();
+        // Yyou could change the fill colour here from white to a darker colour
+        // back and forth over time, along with radius,
+        // to simulate "flickering"
+        this.shadowTexture.context.fillStyle = 'rgb(255, 255, 255)';
+        this.shadowTexture.context.arc(position.x, position.y, radius, 0, Math.PI*2);
+        this.shadowTexture.context.fill();
+        
+        // Says texture should be updated
+        this.shadowTexture.dirty = true;
+    }
 };
 
 var player, cursors, maze, gotKey = false, timeLeft = 30, gameOver = false, frameCount = 0, numLevels;
