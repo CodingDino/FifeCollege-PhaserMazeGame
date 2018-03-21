@@ -22,6 +22,7 @@ var loadState = {
         
         // Graphics
         game.load.image('pixel', 'assets/pixel.png');
+        game.load.image('coin', 'assets/coin.png');
         
         // load audio
         game.load.audio('pickup', 'assets/pickup.wav');

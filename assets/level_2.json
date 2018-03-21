@@ -75,6 +75,116 @@
                  "width":50,
                  "x":299,
                  "y":451
+                }, 
+                {
+                 "gid":10,
+                 "height":50,
+                 "id":8,
+                 "name":"coin",
+                 "properties":
+                    {
+                     "currencyType":"coin",
+                     "currencyValue":1
+                    },
+                 "propertytypes":
+                    {
+                     "currencyType":"string",
+                     "currencyValue":"int"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":50,
+                 "x":450,
+                 "y":250
+                }, 
+                {
+                 "gid":10,
+                 "height":50,
+                 "id":9,
+                 "name":"coin",
+                 "properties":
+                    {
+                     "currencyType":"coin",
+                     "currencyValue":1
+                    },
+                 "propertytypes":
+                    {
+                     "currencyType":"string",
+                     "currencyValue":"int"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":50,
+                 "x":450,
+                 "y":350
+                }, 
+                {
+                 "gid":10,
+                 "height":50,
+                 "id":10,
+                 "name":"coin",
+                 "properties":
+                    {
+                     "currencyType":"coin",
+                     "currencyValue":1
+                    },
+                 "propertytypes":
+                    {
+                     "currencyType":"string",
+                     "currencyValue":"int"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":50,
+                 "x":450,
+                 "y":450
+                }, 
+                {
+                 "gid":10,
+                 "height":50,
+                 "id":11,
+                 "name":"coin",
+                 "properties":
+                    {
+                     "currencyType":"coin",
+                     "currencyValue":1
+                    },
+                 "propertytypes":
+                    {
+                     "currencyType":"string",
+                     "currencyValue":"int"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":50,
+                 "x":450,
+                 "y":550
+                }, 
+                {
+                 "gid":10,
+                 "height":50,
+                 "id":12,
+                 "name":"coin",
+                 "properties":
+                    {
+                     "currencyType":"coin",
+                     "currencyValue":1
+                    },
+                 "propertytypes":
+                    {
+                     "currencyType":"string",
+                     "currencyValue":"int"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":50,
+                 "x":450,
+                 "y":650
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -82,7 +192,7 @@
          "x":0,
          "y":0
         }],
- "nextobjectid":8,
+ "nextobjectid":13,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.1.2",
@@ -98,6 +208,19 @@
          "name":"tileset",
          "spacing":0,
          "tilecount":9,
+         "tileheight":50,
+         "tilewidth":50
+        }, 
+        {
+         "columns":1,
+         "firstgid":10,
+         "image":"coin.png",
+         "imageheight":50,
+         "imagewidth":50,
+         "margin":0,
+         "name":"coin",
+         "spacing":0,
+         "tilecount":1,
          "tileheight":50,
          "tilewidth":50
         }],

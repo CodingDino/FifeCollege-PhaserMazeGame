@@ -35,12 +35,18 @@ var playState = {
         this.shadowTexture = this.game.add.bitmapData(this.game.width, this.game.height);
 
         // Create an object that will use the bitmap as a texture
-        this.lightSprite = this.game.add.image(0, 0, this.shadowTexture);
-        this.lightSprite.fixedToCamera = true;
+        var lightSprite = this.game.add.image(0, 0, this.shadowTexture);
+        lightSprite.fixedToCamera = true;
         
         // Set the blend mode to MULTIPLY. This will darken the colors of
         // everything below this sprite.
-        this.lightSprite.blendMode = Phaser.blendModes.MULTIPLY;
+        lightSprite.blendMode = Phaser.blendModes.MULTIPLY;
+        
+        // text label showing time left in the game.
+        this.coinLabel = game.add.text(5, 450, 
+                                  "COINS: 0",
+                                  { font: '12px Arial', fill: '#ffffff', align: 'left' } );
+        this.coinLabel.fixedToCamera = true;
     },
     
     // state.update is called every frame
@@ -50,6 +56,7 @@ var playState = {
         game.physics.arcade.overlap(this.player,this.enemies, this.loseGame, null, this);
         game.physics.arcade.collide(this.enemies,this.enemies);
         game.physics.arcade.overlap(this.player, this.items, this.collectItem, null, this);
+        game.physics.arcade.overlap(this.player, this.currency, this.collectCurrency, null, this);
         game.physics.arcade.overlap(this.player,this.door, this.winGame, null, this);
         
         // Changed 'maze' into 'this.layer'
@@ -85,15 +92,13 @@ var playState = {
         // Create objects on the map
         
         // Items
-        this.inventory = new Array(0);
+        this.inventory = [];
         this.items = this.game.add.physicsGroup();
         
         // Key
         this.map.createFromObjects('Objects', 'key', 'tileset', 4, true, false, this.items);
         // There can only be one key...
         this.key = this.items.getByName("key");
-        game.physics.arcade.enable(this.key);
-        this.items.add(this.key);
         // Item settings
         this.key.collectSound = game.add.audio('pickup');
         this.key.onCollect = function(state) {
@@ -128,6 +133,15 @@ var playState = {
         this.emitter.gravity = 0;
         // start our emitter
         this.emitter.flow(1000);
+        
+        // Currency
+        this.currencyPouch = {coin: 0}; // Add each type of currency you will have
+        this.currency = this.game.add.physicsGroup();
+        
+        // Coins
+        this.map.createFromObjects('Objects', 'coin', 'coin', 0, true, false, this.currency);
+        this.currencyCollectSound = game.add.audio('pickup');
+        
         
         // Door
         var doors = this.game.add.physicsGroup();
@@ -202,6 +216,18 @@ var playState = {
         if (item.onCollect != null)
             item.onCollect(this);
         item.kill();
+    },
+    
+    // Hand coins being picked up
+    collectCurrency: function(player, currency) {
+        console.log("collectCurrency");
+        this.currencyPouch[currency.currencyType] += currency.currencyValue;
+        
+        this.currencyCollectSound.play();
+        currency.kill();
+        
+        // Add more here if you want to display other types of currency
+        this.coinLabel.text="COINS: "+ this.currencyPouch.coin;
     },
     
     // Function to check if an item is in our inventory

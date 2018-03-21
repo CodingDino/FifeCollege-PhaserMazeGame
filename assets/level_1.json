@@ -25,8 +25,8 @@
                  "type":"",
                  "visible":true,
                  "width":50,
-                 "x":151.181980374665,
-                 "y":100.595004460303
+                 "x":150,
+                 "y":100
                 }, 
                 {
                  "gid":4,
@@ -37,44 +37,176 @@
                  "type":"",
                  "visible":true,
                  "width":50,
-                 "x":400.958965209634,
-                 "y":150.658340767172
+                 "x":400,
+                 "y":150
                 }, 
                 {
                  "gid":2,
-                 "height":50,
+                 "height":45,
                  "id":5,
                  "name":"player",
                  "rotation":0,
                  "type":"",
                  "visible":true,
-                 "width":50,
-                 "x":51,
+                 "width":45,
+                 "x":50,
                  "y":450
                 }, 
                 {
                  "gid":3,
-                 "height":50,
+                 "height":45,
                  "id":6,
                  "name":"enemy",
                  "rotation":0,
                  "type":"",
                  "visible":true,
-                 "width":50,
-                 "x":49,
-                 "y":102
+                 "width":45,
+                 "x":50,
+                 "y":100
                 }, 
                 {
                  "gid":3,
-                 "height":50,
+                 "height":45,
                  "id":7,
                  "name":"enemy",
                  "rotation":0,
                  "type":"",
                  "visible":true,
+                 "width":45,
+                 "x":300,
+                 "y":450
+                }, 
+                {
+                 "gid":10,
+                 "height":50,
+                 "id":8,
+                 "name":"coin",
+                 "properties":
+                    {
+                     "currencyType":"coin",
+                     "currencyValue":1
+                    },
+                 "propertytypes":
+                    {
+                     "currencyType":"string",
+                     "currencyValue":"int"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
                  "width":50,
-                 "x":299,
-                 "y":451
+                 "x":400,
+                 "y":350
+                }, 
+                {
+                 "gid":10,
+                 "height":50,
+                 "id":9,
+                 "name":"coin",
+                 "properties":
+                    {
+                     "currencyType":"coin",
+                     "currencyValue":1
+                    },
+                 "propertytypes":
+                    {
+                     "currencyType":"string",
+                     "currencyValue":"int"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":50,
+                 "x":400,
+                 "y":250
+                }, 
+                {
+                 "gid":10,
+                 "height":50,
+                 "id":10,
+                 "name":"coin",
+                 "properties":
+                    {
+                     "currencyType":"coin",
+                     "currencyValue":1
+                    },
+                 "propertytypes":
+                    {
+                     "currencyType":"string",
+                     "currencyValue":"int"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":50,
+                 "x":300,
+                 "y":250
+                }, 
+                {
+                 "gid":10,
+                 "height":50,
+                 "id":11,
+                 "name":"coin",
+                 "properties":
+                    {
+                     "currencyType":"coin",
+                     "currencyValue":1
+                    },
+                 "propertytypes":
+                    {
+                     "currencyType":"string",
+                     "currencyValue":"int"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":50,
+                 "x":400,
+                 "y":450
+                }, 
+                {
+                 "gid":10,
+                 "height":50,
+                 "id":12,
+                 "name":"coin",
+                 "properties":
+                    {
+                     "currencyType":"coin",
+                     "currencyValue":1
+                    },
+                 "propertytypes":
+                    {
+                     "currencyType":"string",
+                     "currencyValue":"int"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":50,
+                 "x":50,
+                 "y":250
+                }, 
+                {
+                 "gid":10,
+                 "height":50,
+                 "id":13,
+                 "name":"coin",
+                 "properties":
+                    {
+                     "currencyType":"coin",
+                     "currencyValue":1
+                    },
+                 "propertytypes":
+                    {
+                     "currencyType":"string",
+                     "currencyValue":"int"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":50,
+                 "x":50,
+                 "y":150
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -82,7 +214,7 @@
          "x":0,
          "y":0
         }],
- "nextobjectid":8,
+ "nextobjectid":16,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.1.2",
@@ -92,12 +224,25 @@
          "columns":3,
          "firstgid":1,
          "image":"tileset.png",
-         "imageheight":100,
+         "imageheight":150,
          "imagewidth":150,
          "margin":0,
          "name":"tileset",
          "spacing":0,
-         "tilecount":6,
+         "tilecount":9,
+         "tileheight":50,
+         "tilewidth":50
+        }, 
+        {
+         "columns":1,
+         "firstgid":10,
+         "image":"coin.png",
+         "imageheight":50,
+         "imagewidth":50,
+         "margin":0,
+         "name":"coin",
+         "spacing":0,
+         "tilecount":1,
          "tileheight":50,
          "tilewidth":50
         }],
