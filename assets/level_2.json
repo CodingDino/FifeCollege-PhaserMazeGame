@@ -21,6 +21,16 @@
                  "height":50,
                  "id":1,
                  "name":"key",
+                 "properties":
+                    {
+                     "cost":3,
+                     "costType":"coin"
+                    },
+                 "propertytypes":
+                    {
+                     "cost":"int",
+                     "costType":"string"
+                    },
                  "rotation":0,
                  "type":"",
                  "visible":true,

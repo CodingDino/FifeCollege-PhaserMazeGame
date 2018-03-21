@@ -43,7 +43,7 @@ var playState = {
         lightSprite.blendMode = Phaser.blendModes.MULTIPLY;
         
         // text label showing time left in the game.
-        this.coinLabel = game.add.text(5, 450, 
+        this.coinLabel = game.add.text(5, 480, 
                                   "COINS: 0",
                                   { font: '12px Arial', fill: '#ffffff', align: 'left' } );
         this.coinLabel.fixedToCamera = true;
@@ -105,6 +105,18 @@ var playState = {
             state.emitter.on = false;
         }
         
+        // Some items may cost money!
+        // For the ones that cost, add their price below them
+        this.items.forEach(function(item){
+            if (item.cost != 0) { // true if cost is defined and is not 0
+                item.costText = game.add.text(item.x + 25, item.y + 50,
+                                              item.cost,
+                                              { font: '12px Arial', 
+                                                fill: '#ffffff', 
+                                                align: 'center' } );    
+            }
+        });
+        
         // Let's make the key pulse using a tween
         var keyTween = game.add.tween(this.key.scale);
         keyTween.to({x: 1.25, y:1.25}, 500); // scale up to 1.25 over 500 ms
@@ -133,6 +145,7 @@ var playState = {
         this.emitter.gravity = 0;
         // start our emitter
         this.emitter.flow(1000);
+        
         
         // Currency
         this.currencyPouch = {coin: 0}; // Add each type of currency you will have
@@ -210,12 +223,35 @@ var playState = {
     // Handle the key being picked up
     collectItem: function(player, item) {
         console.log("collectItem");
-        this.inventory.push(item.name);
-        if (item.collectSound != null)
-            item.collectSound.play();
-        if (item.onCollect != null)
-            item.onCollect(this);
-        item.kill();
+        
+        var canPickUp = false;
+        
+        // If this item costs, we need to make sure we have enough to spend!
+        if (item.cost != 0) {
+            // check if we have enough
+            if (this.currencyPouch[item.costType] >= item.cost) {
+                // we have enough - we can buy it!
+                canPickUp = true;
+                // reduce our money
+                this.currencyPouch[item.costType] -= item.cost;
+                // destroy the display for the item's cost
+                item.costText.kill();
+                // update the display for our curreny funds
+                this.updateCurrencyDisplay();
+            }
+        } else {
+            // this item doesn't cost anthing, we can pick it up!
+            canPickUp = true;
+        }
+        
+        if (canPickUp == true) {
+            this.inventory.push(item.name);
+            if (item.collectSound != null)
+                item.collectSound.play();
+            if (item.onCollect != null)
+                item.onCollect(this);
+            item.kill();
+        }
     },
     
     // Hand coins being picked up
@@ -225,6 +261,12 @@ var playState = {
         
         this.currencyCollectSound.play();
         currency.kill();
+        
+        this.updateCurrencyDisplay();
+    },
+    
+    // Update the visual display of the currency
+    updateCurrencyDisplay: function() {
         
         // Add more here if you want to display other types of currency
         this.coinLabel.text="COINS: "+ this.currencyPouch.coin;

@@ -21,6 +21,16 @@
                  "height":50,
                  "id":1,
                  "name":"key",
+                 "properties":
+                    {
+                     "cost":1,
+                     "costType":"coin"
+                    },
+                 "propertytypes":
+                    {
+                     "cost":"int",
+                     "costType":"string"
+                    },
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -214,7 +224,7 @@
          "x":0,
          "y":0
         }],
- "nextobjectid":16,
+ "nextobjectid":17,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.1.2",
