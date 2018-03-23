@@ -64,6 +64,11 @@ var mainState = {
         var lightSprite = game.add.image(0,0,this.shadowTexture);
         lightSprite.fixedToCamera = true;
         lightSprite.blendMode = Phaser.blendModes.MULTIPLY;
+        
+        
+        // Text label showing the coin total
+        this.coinLabel = game.add.text(5, 480, "COINS: 0", { font: '12px Arial', fill: '#ffffff', align: 'left' });
+        this.coinLabel.fixedToCamera = true;
     },
     
     // Update called every frame thereafter
@@ -76,6 +81,9 @@ var mainState = {
         game.physics.arcade.collide(baddies,this.layer);
         game.physics.arcade.overlap(player,this.items, 
                                     this.collectItem, 
+                                    null, this);
+        game.physics.arcade.overlap(player,this.currency, 
+                                    this.collectCurrency, 
                                     null, this);
         game.physics.arcade.overlap(player, door, 
                                     this.winGame, 
@@ -157,12 +165,20 @@ var mainState = {
         
         // Currency System
         // Create an object to hold our in hand currency (that we have already picked up)
-        this.currencyPouch = {coins: 0 }; // Add each type of currency you will have here
+        this.currencyPouch = {coin: 0 }; // Add each type of currency you will have here
         // Group to hold the coins in the game world
         this.currency = game.add.physicsGroup();
         
         // Load the coins from the tilemap
         this.map.createFromObjects('Objects', 'coin', 'coin', 0, true, false, this.currency);
+        
+        // Add the type and value for these currencies
+        // NOTE: This overrides what is in the tilemap
+        this.currency.forEach(function(currency){
+            currency.currencyType = 'coin';
+            currency.currencyValue = 1;
+        })
+        
         
         // Grow and Shrink the Key Using Tween
         var keyTween = game.add.tween(key.scale);
@@ -302,6 +318,22 @@ var mainState = {
     // Checks if an item of this name is in our inventory
     hasItem: function(itemName) {
         return this.inventory.indexOf(itemName) > -1;
+    },
+    
+    // Handle coins being picked up
+    collectCurrency: function (player, currency) {        
+        this.currencyPouch[currency.currencyType] += currency.currencyValue;
+        
+        currency.kill();
+        
+        this.updateCurrencyDisplay();
+    },
+    
+    // Update the visual display of our currency
+    updateCurrencyDisplay: function () {
+        this.coinLabel.text = "COINS: "+ this.currencyPouch.coin;
+        
+        // If you have more types of currency, update their display here.
     }
 };
 
