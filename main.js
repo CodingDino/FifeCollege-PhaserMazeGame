@@ -142,7 +142,18 @@ var mainState = {
         this.map.createFromObjects('Objects', 'key', 'tileset', 4, true, false, this.items);
         key = this.items.getByName('key');
         game.physics.arcade.enable(key);
-        key.collectSound = game.add.audio('pickup');
+        //key.collectionSound = game.add.audio('pickup');
+        
+        
+        // Add more items here
+        
+        // Read in and handle data for all items
+        this.items.forEach(function(item){
+            if (item.collectionSoundName != null) {
+                item.collectionSound = game.add.audio(item.collectionSoundName);
+            }
+        })
+        
         
         // Grow and Shrink the Key Using Tween
         var keyTween = game.add.tween(key.scale);

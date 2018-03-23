@@ -21,6 +21,12 @@
                  "height":50,
                  "id":1,
                  "name":"key",
+                 "properties":[
+                        {
+                         "name":"collectionSoundName",
+                         "type":"string",
+                         "value":"pickup"
+                        }],
                  "rotation":0,
                  "type":"",
                  "visible":true,
