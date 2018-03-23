@@ -142,6 +142,7 @@ var mainState = {
         this.map.createFromObjects('Objects', 'key', 'tileset', 4, true, false, this.items);
         key = this.items.getByName('key');
         game.physics.arcade.enable(key);
+        key.collectSound = game.add.audio('pickup');
         
         // Grow and Shrink the Key Using Tween
         var keyTween = game.add.tween(key.scale);
@@ -269,6 +270,12 @@ var mainState = {
     // Adds an item to inventory and deletes the sprite
     collectItem: function(player, item) {
         this.inventory.push(item.name);
+        
+        // Play the collectiond if it is present on the item
+        if (item.collectionSound != null) {
+            item.collectionSound.play();
+        }
+        
         item.kill();
     },
     
