@@ -73,8 +73,8 @@ var mainState = {
         
         game.physics.arcade.collide(player,this.layer);
         game.physics.arcade.collide(baddies,this.layer);
-        game.physics.arcade.overlap(player, key, 
-                                    this.showExit, 
+        game.physics.arcade.overlap(player,this.items, 
+                                    this.collectItem, 
                                     null, this);
         game.physics.arcade.overlap(player, door, 
                                     this.winGame, 
@@ -132,11 +132,15 @@ var mainState = {
         // Enable collisions with the first element of our tileset (the wall)
         this.map.setCollision(1);
         
+        // Item System
+        // Create an array to hold our current items (held items)
+        this.inventory = [];
+        // Create a group to hold items in the game world
+        this.items = game.add.physicsGroup();
         
         // create key
-        var keys = game.add.physicsGroup();
-        this.map.createFromObjects('Objects', 'key', 'tileset', 4, true, false, keys);
-        key = keys.getFirstExists();
+        this.map.createFromObjects('Objects', 'key', 'tileset', 4, true, false, this.items);
+        key = this.items.getByName('key');
         game.physics.arcade.enable(key);
         
         // Grow and Shrink the Key Using Tween
@@ -180,52 +184,9 @@ var mainState = {
     }, // end buildMazeFromFile() 
     
     
-    buildMaze: function(){
-        // make maze a group of objects
-        maze = game.add.group();
-        maze.enableBody = true; // add physics to the maze
-        maze.setAll('body.immovable', true); // make the maze objects immovable
-        
-        
-        var blockArray = [
-            [1,1,1,1,1,1,1,1,1,1],
-            [1,0,0,0,1,1,0,0,0,1],
-            [1,0,1,0,1,0,0,1,0,1],
-            [1,0,1,0,1,0,1,1,1,1],
-            [1,0,0,0,0,0,0,0,0,1],
-            [1,1,1,1,0,1,1,1,0,1],
-            [1,0,0,0,0,0,0,0,0,1],
-            [1,0,1,1,1,0,1,1,0,1],
-            [1,0,0,0,0,0,0,0,0,1],
-            [1,1,1,1,1,1,1,1,1,1]
-            ];
-        
-        for (var r=0;r<blockArray.length;r++){
-            
-            for (var c=0; c<blockArray[r].length;c++){
-                console.log("Column",c);
-                console.log("Row",r);
-                if(blockArray[r][c]==1){
-                   var block=game.add.sprite(c*50,r*50,'block');
-                    maze.add(block);
-                }
-            }
-            
-        }
-        
-        maze.setAll('body.immovable', true);
-    },
-    
-    showExit: function() {
-        keyPickup.play();
-        key.kill();
-        gotKey = true;
-    },
-    
-    
     winGame: function(){
         
-        if(gotKey==true){
+        if(this.hasItem('key') == true){
             
             if (this.currentLevel == numLevels) {
                 winGame.play();
@@ -303,6 +264,17 @@ var mainState = {
         
         // Says texture should be updated
         this.shadowTexture.dirty = true;
+    },
+    
+    // Adds an item to inventory and deletes the sprite
+    collectItem: function(player, item) {
+        this.inventory.push(item.name);
+        item.kill();
+    },
+    
+    // Checks if an item of this name is in our inventory
+    hasItem: function(itemName) {
+        return this.inventory.indexOf(itemName) > -1;
     }
 };
 
