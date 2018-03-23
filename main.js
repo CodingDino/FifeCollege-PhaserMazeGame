@@ -9,6 +9,7 @@ var mainState = {
         game.load.image('baddy', 'assets/baddy.png');
         game.load.image('key', 'assets/key.png');
         game.load.image('door', 'assets/door.png');
+        game.load.image('coin', 'assets/coin.png');
         
         // load audio
         game.load.audio('pickup', 'assets/pickup.wav');
@@ -154,6 +155,14 @@ var mainState = {
             }
         })
         
+        // Currency System
+        // Create an object to hold our in hand currency (that we have already picked up)
+        this.currencyPouch = {coins: 0 }; // Add each type of currency you will have here
+        // Group to hold the coins in the game world
+        this.currency = game.add.physicsGroup();
+        
+        // Load the coins from the tilemap
+        this.map.createFromObjects('Objects', 'coin', 'coin', 0, true, false, this.currency);
         
         // Grow and Shrink the Key Using Tween
         var keyTween = game.add.tween(key.scale);
